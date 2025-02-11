@@ -8,6 +8,7 @@ import javax.management.RuntimeErrorException;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFW;
 public abstract class Base {
     // window dimensions
@@ -42,6 +43,8 @@ public abstract class Base {
         // detect current context and makes
         // OpenGL bindings available for use
         GL.createCapabilities();
+        OpenGLUtils.checkVersion();
+        System.out.println(" LWJGL version: " + Version.getVersion());
     }
     public abstract void initialize();
     public abstract void update();

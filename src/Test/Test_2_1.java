@@ -1,4 +1,4 @@
-package src.core;
+package src.Test;
 import src.core.Base;
 
 public class Test_2_1 extends Base{
