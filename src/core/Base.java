@@ -11,6 +11,15 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFW;
 public abstract class Base {
+    // handle user input events
+    public Input input;
+    // number of seconds application has been running
+    public float time;
+    // seconds since last iteration of run loop
+    public float deltaTime;
+    // store time data from last iteration of run loop
+    private long previousTime;
+    private long currentTime;
     // window dimensions
     private int windowWidth;
     private int windowHeight;
@@ -31,6 +40,11 @@ public abstract class Base {
         window = glfwCreateWindow(windowWidth, windowHeight, "Graphics Window", 0, 0);
         if(window == 0) throw new RuntimeException("Failed to create the GLFW window");
         running = true;
+        input = new Input(window);
+        time = 0;
+        deltaTime = 1/60f;
+        currentTime = System.currentTimeMillis();
+        previousTime = System.currentTimeMillis();
         // make all OpenGL function calls
         // apply to this context instance
         glfwMakeContextCurrent(window);
@@ -64,6 +78,13 @@ public abstract class Base {
         while(running){
             // check for user interaction events
             glfwPollEvents();
+            // recalculate time variables
+            currentTime = System.currentTimeMillis();
+            deltaTime = (currentTime - previousTime) / 1000f;
+            time += deltaTime;
+            previousTime = currentTime;
+            // process input
+            input.update();
             // check if window close icon is clicked
             if (glfwWindowShouldClose(window)) running = false;
             // application-specific update code

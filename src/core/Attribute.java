@@ -40,7 +40,7 @@ public class Attribute {
         int variableRef = glGetAttribLocation(programRef, variableName);
         // if program does not reference variable, exit
         if(variableRef == -1){
-            System.out.println(" program can't reference variable");
+            System.out.println(" program can't reference variable: " + variableName);
             return;
         }
         // select buffer used by the following functions
