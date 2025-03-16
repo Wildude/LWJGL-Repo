@@ -201,4 +201,52 @@ public class Matrix {
     {
        return makePerspective(60, 1, 0.1, 1000);
     }
+    public static Matrix makeLookAt(Vector position, Vector target)
+    {
+        Vector worldUp = new Vector(0, 1, 0);
+        Vector forward = Vector.subtract( target, position );
+        Vector right = Vector.cross( forward, worldUp );
+        // if forward and worldUp vectors are parallel, 
+        // right vector is zero;
+        // fix by perturbing worldUp vector a bit
+        if (right.getLength() < 0.001)
+        {
+            Vector offset = new Vector(0.001, 0, 0);
+            right = Vector.cross( forward, 
+            Vector.add(worldUp, offset) );
+        }
+        Vector up = Vector.cross( right, forward );
+        // all vectors should have length 1
+        forward.setLength(1);
+        right.setLength(1);
+        up.setLength(1);
+        // the vectors are shorter than the matrix dimensions,
+        //   so the last matrix column entry has default value 0;
+        //   only needs to be adjusted in the last matrix column.
+        Matrix m = new Matrix(4,4);
+        m.setCol(0, right);
+        m.setCol(1, up);
+        forward.multiplyScalar(-1);
+        m.setCol(2, forward);
+        m.setCol(3, position);
+        m.values[3][3] = 1;
+        return m;
+    }
+    public static Matrix makeOrthographic(
+    double left, double right,
+    double bottom, double top,
+    double near, double far)
+    {
+        Matrix m = new Matrix(4,4);
+        m.setValues(2/(right-left), 0, 0, 
+        -(right+left)/(right-left),
+        0, 2/(top-bottom), 0, -(top+bottom)/(top-bottom),
+        0, 0, -2/(far-near), -(far+near)/(far-near),
+        0, 0, 0, 1);
+        return m;
+    }
+    public static Matrix makeOrthographic()
+    {
+        return makeOrthographic(-1,1, -1,1, -1,1);
+    }
 }

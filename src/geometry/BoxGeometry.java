@@ -35,8 +35,33 @@ public class BoxGeometry extends Geometry{
         C3,C3,C3,C3,C3,C3, C4,C4,C4,C4,C4,C4,
         C5,C5,C5,C5,C5,C5, C6,C6,C6,C6,C6,C6  );
         float[] colorData = Vector.flattenList(colorList);
-        addAttribute("vec3", "vertexPosition", positionData);
-        addAttribute("vec3", "vertexColor", colorData);
+        addAttribute("vec3", "VertexPosition", positionData);
+        addAttribute("vec3", "VertexColor", colorData);
         vertexCount = 36;
+        // texture coordinates
+        Vector T0 = new Vector(0,0);
+        Vector T1 = new Vector(1,0);
+        Vector T2 = new Vector(0,1);
+        Vector T3 = new Vector(1,1);
+        List uvList = Arrays.asList(
+        T0,T1,T3,T0,T3,T2, T0,T1,T3,T0,T3,T2,
+        T0,T1,T3,T0,T3,T2, T0,T1,T3,T0,T3,T2,
+        T0,T1,T3,T0,T3,T2, T0,T1,T3,T0,T3,T2  );
+        float[] uvData = Vector.flattenList(uvList);
+        addAttribute("vec2", "vertexUV", uvData);
+        // normal vectors for x+, x-, y+, y-, z+, z
+        Vector N1 = new Vector( 1,  0,  0);
+        Vector N2 = new Vector(-1,  0,  0);
+        Vector N3 = new Vector( 0,  1,  0);
+        Vector N4 = new Vector( 0, -1,  0);
+        Vector N5 = new Vector( 0,  0,  1);
+        Vector N6 = new Vector( 0,  0, -1);
+        List normalList = Arrays.asList(
+        N1,N1,N1,N1,N1,N1, N2,N2,N2,N2,N2,N2,
+        N3,N3,N3,N3,N3,N3, N4,N4,N4,N4,N4,N4,
+        N5,N5,N5,N5,N5,N5, N6,N6,N6,N6,N6,N6  );
+        float[] normalData = Vector.flattenList(normalList);
+        addAttribute("vec3", "vertexNormal", normalData);
+        addAttribute("vec3", "faceNormal", normalData);
     }
 }

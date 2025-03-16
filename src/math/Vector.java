@@ -66,5 +66,57 @@ public class Vector
         for (int i = 0; i < smaller; i++)
         newValues[i] = values[i];
         values = newValues;
+    } 
+    public void multiplyScalar(double s)
+    {
+        for (int i = 0; i < values.length; i++)
+        values[i] *= s;
+    }
+    public static Vector multiplyScalar(double s, Vector v)
+    {
+        Vector n = new Vector( v.values.length );
+        for (int i = 0; i < v.values.length; i++)
+        n.values[i] = s * v.values[i];
+        return n;
+    }
+    public double getLength()
+    {
+        double length = 0;
+        for (int i = 0; i < values.length; i++)
+        length += values[i] * values[i];
+        return Math.sqrt(length);
+    }
+    public void setLength(double length)
+    {
+        multiplyScalar( length / getLength() );
+    }
+    public static Vector add(Vector v, Vector w)
+    {
+        Vector n = new Vector( v.values.length );
+        for (int i = 0; i < v.values.length; i++)
+        n.values[i] = v.values[i] + w.values[i];
+        return n;
+    }
+    public static Vector subtract(Vector v, Vector w)
+    {
+        Vector n = new Vector( v.values.length );
+        for (int i = 0; i < v.values.length; i++)
+        n.values[i] = v.values[i] - w.values[i];
+        return n;
+    }   
+    public static Vector cross(Vector v, Vector w)
+    {
+        return new Vector(
+        v.values[1] * w.values[2] - v.values[2] * w.values[1],
+        v.values[2] * w.values[0] - v.values[0] * w.values[2],
+        v.values[0] * w.values[1] - v.values[1] * w.values[0]  );
+    }
+    public static Vector calcNormal(Vector P0, Vector P1, Vector P2)
+    {
+        Vector v1 = Vector.subtract(P1, P0);
+        Vector v2 = Vector.subtract(P2, P0);
+        Vector normal = Vector.cross(v1, v2);
+        normal.setLength(1);
+        return normal;
     }
 }
