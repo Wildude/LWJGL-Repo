@@ -19,8 +19,8 @@ public abstract class Base {
     private long previousTime;
     private long currentTime;
     // window dimensions
-    private int windowWidth;
-    private int windowHeight;
+    static private int windowWidth;
+    static private int windowHeight;
     // the window handle
     private long window;
     // is the main loop currently active?
@@ -123,5 +123,11 @@ public abstract class Base {
         GLFWErrorCallback callback = GLFW.glfwSetErrorCallback(null);
         if (callback != null) callback.free();
         else System.out.println("No previous error callback to free.");    
+    }
+    static public int getWidth(){
+        return windowWidth;
+    }    
+    static public int getHeight(){
+        return windowHeight;
     }
 }
