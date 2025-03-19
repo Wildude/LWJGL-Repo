@@ -97,4 +97,26 @@ public class Object3D {
         transform.values[1][3] = position.values[1];
         transform.values[2][3] = position.values[2];
     }
+    public void lookAt(Vector targetPosition)
+    {
+        transform = Matrix.makeLookAt( 
+        this.getWorldPosition(), targetPosition );
+    }
+    // returns 3x3 upper-left submatrix with rotation data
+    public Matrix getRotationMatrix()
+    {
+        return transform.minor(3,3);
+    }
+    public Vector getDirection()
+    {
+        Vector forward = new Vector(0,0,-1);
+        return getRotationMatrix().multiplyVector( forward );
+    }
+    public void setDirection(Vector direction)
+    {
+        Vector position = getPosition();
+        Vector targetPosition = Vector.add(position, direction);
+        lookAt( targetPosition );
+    }
+
 }

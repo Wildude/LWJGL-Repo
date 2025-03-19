@@ -9,6 +9,7 @@ import src.core.*;
 import src.geometry.*;
 import src.material.*;
 import src.math.*;
+import src.light.*;
 public class Test_4_template extends Base{
     public Renderer renderer;
     public Scene scene;
