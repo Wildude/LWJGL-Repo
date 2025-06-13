@@ -66,8 +66,8 @@ public class SurfaceGeometry extends Geometry{
         float[] positionData = Vector.flattenList(positionList);
         float[] colorData = Vector.flattenList(colorList);
         float[] uvData = Vector.flattenList(uvList);
-        addAttribute("vec3", "VertexPosition", positionData);
-        addAttribute("vec3", "VertexColor", colorData);
+        addAttribute("vec3", "vertexPosition", positionData);
+        addAttribute("vec3", "vertexColor", colorData);
         addAttribute("vec2", "vertexUV", uvData);
         vertexCount = uResolution * vResolution * 6;          
     }

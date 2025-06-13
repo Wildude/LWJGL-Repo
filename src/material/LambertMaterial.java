@@ -20,6 +20,7 @@ public class LambertMaterial extends Material{
         addUniform( "Light", "light2", null );
         addUniform( "Light", "light3", null );
         addUniform("bool", "useBumpTexture", 0);
+        addUniform("bool", "useShadow", 0);
         locateUniforms();
         addRenderSetting( "doubleSide", true );
         addRenderSetting( "wireframe", false );
@@ -36,6 +37,12 @@ public class LambertMaterial extends Material{
         uniforms.get("useBumpTexture").data = 1;
         addUniform("sampler2D", "bumpTexture", new Vector(bumpTexture.textureRef, 2));
         addUniform("float", "bumpStrength", bumpStrength);
+        locateUniforms();
+    }
+    public void enableShadow()
+    {
+        uniforms.get("useShadow").data = 1;
+        addUniform("Shadow", "shadow0", null);
         locateUniforms();
     }
 }

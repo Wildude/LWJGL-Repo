@@ -35,8 +35,8 @@ public class BoxGeometry extends Geometry{
         C3,C3,C3,C3,C3,C3, C4,C4,C4,C4,C4,C4,
         C5,C5,C5,C5,C5,C5, C6,C6,C6,C6,C6,C6  );
         float[] colorData = Vector.flattenList(colorList);
-        addAttribute("vec3", "VertexPosition", positionData);
-        addAttribute("vec3", "VertexColor", colorData);
+        addAttribute("vec3", "vertexPosition", positionData);
+        addAttribute("vec3", "vertexColor", colorData);
         vertexCount = 36;
         // texture coordinates
         Vector T0 = new Vector(0,0);

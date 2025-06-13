@@ -32,6 +32,14 @@ public class Texture {
     public int width, height;
     public ByteBuffer pixelData;
     // load texture from file
+    public Texture(int width, int height, int magFilter, int minFilter, int wrap){
+        this.width = width;
+        this.height = height;
+        this.magFilter = magFilter;
+        this.minFilter = minFilter;
+        this.wrap = wrap;
+        uploadData();
+    }
     public Texture(String fileName)
     {
         magFilter = GL_LINEAR;
@@ -53,14 +61,7 @@ public class Texture {
     // RenderTarget will be implemented later 
     public Texture(int width, int height)
     {
-        this.width = width;
-        this.height = height;
-
-        magFilter = GL_LINEAR;
-        minFilter = GL_LINEAR;
-        wrap = GL_CLAMP_TO_EDGE;
-
-        uploadData();
+        this(width, height, GL_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE);
     }
     // upload pixel data to GPU
     public void uploadData()

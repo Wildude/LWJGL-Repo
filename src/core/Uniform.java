@@ -55,6 +55,28 @@ public class Uniform<T> {
             glGetUniformLocation(programRef, 
             variableName + ".attenuation") );
         }
+        else if (dataType.equals("Shadow"))
+        {
+            variableRefMap = new HashMap<String, Integer>();
+            variableRefMap.put("lightDirection",
+            glGetUniformLocation(programRef, 
+            variableName + ".lightDirection") );
+            variableRefMap.put("projectionMatrix",
+            glGetUniformLocation(programRef, 
+            variableName + ".projectionMatrix") );
+            variableRefMap.put("viewMatrix",
+            glGetUniformLocation(programRef, 
+            variableName + ".viewMatrix") );
+            variableRefMap.put("depthTexture",
+            glGetUniformLocation(programRef, 
+            variableName + ".depthTexture") );
+            variableRefMap.put("strength",
+            glGetUniformLocation(programRef, 
+            variableName + ".strength") );
+            variableRefMap.put("bias",
+            glGetUniformLocation(programRef, 
+            variableName + ".bias") );
+        }
         else{
             variableRef = glGetUniformLocation(programRef, variableName);
             if (variableRef == -1){
@@ -141,6 +163,27 @@ public class Uniform<T> {
             glUniform3f( variableRefMap.get("attenuation"), 
             (float)att.values[0], (float)att.values[1], 
             (float)att.values[2] );
+        }
+        else if (dataType.equals("Shadow"))
+        {
+            Shadow S = (Shadow)data;
+            Vector dir = S.lightSource.getDirection();
+            glUniform3f( variableRefMap.get("lightDirection"),
+            (float)dir.values[0], (float)dir.values[1],      
+            (float)dir.values[2] );
+            glUniformMatrix4fv( variableRefMap.get("projectionMatrix"),
+            true, S.camera.projectionMatrix.flatten() );
+            glUniformMatrix4fv( variableRefMap.get("viewMatrix"),
+            true, S.camera.viewMatrix.flatten() );
+            // configure depth texture
+            int textureObjectRef = S.renderTarget.texture.textureRef;
+            int textureUnitRef = 15;
+            glActiveTexture( GL_TEXTURE0 + textureUnitRef );
+            glBindTexture( GL_TEXTURE_2D, textureObjectRef );
+            glUniform1i( variableRefMap.get("depthTexture"), 
+            textureUnitRef );
+            glUniform1f( variableRefMap.get("strength"), S.strength );
+            glUniform1f( variableRefMap.get("bias"), S.bias );
         }
     }
 }
